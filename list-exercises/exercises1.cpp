@@ -12,6 +12,9 @@ int **split(int *list, int len);
 bool is_sublist(int *xs, int len_xs, int *ys, int len_ys);
 bool remainder(int *xs, int len_xs, int *ys, int len_ys);
 
+// TODO: Make sure to free memory allocated with news!
+
+
 // main function
 int main()
 {
