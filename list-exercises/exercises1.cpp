@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 using namespace std;
 
 // Function declarations
@@ -11,6 +12,8 @@ int right(int *list, int el, int len);
 int **split(int *list, int len);
 bool is_sublist(int *xs, int len_xs, int *ys, int len_ys);
 bool remainder(int *xs, int len_xs, int *ys, int len_ys);
+int *add_start(int el, int *list, int len);
+void add_end(int el, int *list, int len, int *buff);
 
 // TODO: Make sure to free memory allocated with news!
 
@@ -43,6 +46,24 @@ int main()
 
 	cout << is_sublist(xs, 3, ys,  7) << endl; 	// is_sublist
 
+
+	cout << "-- add_start --" << endl;
+	int *res_list = add_start(1, test_list, len);
+	for (int i = 0; i < len+1; i++)
+	{
+		cout << res_list[i] << ' ';
+	}
+	cout << endl;
+
+	cout << "-- add_end --" << endl;
+	int *test_list_cpy = new int[len];
+	copy(test_list, test_list + len, test_list_cpy);
+	add_end(7, test_list_cpy, len, test_list_cpy);
+	for (int i = 0; i < len+1; i++)
+	{
+		cout << test_list_cpy[i] << ' ';
+	}
+	cout << endl;
 
 	return 0;
 }
@@ -202,7 +223,38 @@ bool remainder(int *xs, int len_xs, int *ys, int len_ys)
 
 // (* Construct a function add_start which adds integer el to the beginning of a list of integers l *)
 
+int *add_start(int el, int *list, int len)
+{
+	if(list)
+	{
+		int *res = new int[len+1];
+		*res = el;
+		copy(list, list+len, res+1);
+		return res;
+	}
+	else 
+	{
+		return NULL;
+	}
+}
+
 // (* Construct a function add_end which adds integer el to the end of the list of integers xs *)
+
+void add_end(int el, int *list, int len, int *buff)
+{
+	if (list && len == 1)
+	{
+		copy(list, list+1, buff);
+		*(buff+1) = el;
+	}
+	else if (list)
+	{
+		copy(list, list+1, buff);
+		add_end(el, list+1, len-1, buff+1);
+	}
+	else {}
+}
+
 
 // (* Construct a function delete_one which deletes first instance of integer el from the list of integers xs *)
 
